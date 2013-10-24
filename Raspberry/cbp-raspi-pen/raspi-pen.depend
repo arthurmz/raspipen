@@ -1,0 +1,75 @@
+# depslib dependency file v1.0
+1381255679 source:d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\easybmp\easybmp.cpp
+	"EasyBMP.h"
+
+1380746802 "
+
+1380672797 d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\easybmp\easybmp.h
+	<iostream>
+	<cmath>
+	<cctype>
+	<cstring>
+	<stdio.h>
+	<cstdio>
+	"EasyBMP_DataStructures.h"
+	"EasyBMP_BMP.h"
+	"EasyBMP_VariousBMPutilities.h"
+
+1380672797 ariousBMPutilities.h"
+
+1380672797 d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\easybmp\easybmp_datastructures.h
+
+1380672797 d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\easybmp\easybmp_bmp.h
+
+1380672797 d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\easybmp\easybmp_variousbmputilities.h
+
+1381256209 source:d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\main.cpp
+	<iostream>
+	<cstdlib>
+	<fstream>
+	<string>
+	"physics.h"
+	"EasyBMP/EasyBMP.h"
+
+1380927924 asyBMP.h"
+
+1380921762 source:d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\physics.cpp
+	<stdlib.h>
+
+1380921762 
+
+1380746802 source:d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\tester.cpp
+	"Physics.h"
+
+1380921713 d:\ufrn\2013.2-tópicos ii\raspi-pen-repo\raspberry\cbp-raspi-pen\physics.h
+
+1381102495 source:/home/arthur/topII/rasppen-rep/trunk/Raspberry/cbp-raspi-pen/main.cpp
+	<iostream>
+	<cstdlib>
+	<fstream>
+	<string>
+	"physics.h"
+	"EasyBMP/EasyBMP.h"
+
+1381102497 /home/arthur/topII/rasppen-rep/trunk/Raspberry/cbp-raspi-pen/physics.h
+
+1381102477 /home/arthur/topII/rasppen-rep/trunk/Raspberry/cbp-raspi-pen/EasyBMP/EasyBMP.h
+	<iostream>
+	<cmath>
+	<cctype>
+	<cstring>
+	<stdio.h>
+	<cstdio>
+	"EasyBMP_DataStructures.h"
+	"EasyBMP_BMP.h"
+	"EasyBMP_VariousBMPutilities.h"
+
+1381102477 /home/arthur/topII/rasppen-rep/trunk/Raspberry/cbp-raspi-pen/EasyBMP/EasyBMP_DataStructures.h
+
+1381102477 /home/arthur/topII/rasppen-rep/trunk/Raspberry/cbp-raspi-pen/EasyBMP/EasyBMP_BMP.h
+
+1381102477 /home/arthur/topII/rasppen-rep/trunk/Raspberry/cbp-raspi-pen/EasyBMP/EasyBMP_VariousBMPutilities.h
+
+1381102495 source:/home/arthur/topII/rasppen-rep/trunk/Raspberry/cbp-raspi-pen/physics.cpp
+	<stdlib.h>
+

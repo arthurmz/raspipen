@@ -1,0 +1,4 @@
+GND giroscópio > GND arduino
+SDA giroscópio > A4 arduino
+SCL giroscópio > A5 arduino
+VCC giroscópio > 3.3 V arduino
