@@ -1,0 +1,14 @@
+The MPU6030 demo code is copied from
+
+	https://github.com/richardghirst/PiBits/tree/master/MPU6050-Pi-Demo
+
+Thus Richard Hirst modified the Jeff Rowberg code from
+    
+	https://github.com/jrowberg/i2cdevlib
+
+
+I basicaly have not modified the code, just changed the occurrences of i2c device number from /dev/i2c-0 to /dev/i2c-1
+
+Everything else is my own.
+
+Arthur Macêdo <arthur.jmacedo@gmail.com> 28 Oct 2013
