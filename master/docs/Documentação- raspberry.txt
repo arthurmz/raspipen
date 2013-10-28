@@ -1,0 +1,17 @@
+sistema operacional utilizado: raspibian
+biblioteca extra: gtkmm-3.0
+ip do raspberry: 10.42.0.10
+
+para conectar: ssh pi@10.42.0.10 
+senha: raspberry
+
+código para leitura do mpu6050: (foi necessário alterar /dev/i2c-0 para /dev/i2c-1)
+http://www.raspberrypi.org/phpBB3/viewtopic.php?t=22266
+https://github.com/richardghirst/PiBits/tree/master/MPU6050-Pi-Demo
+
+pinagem mpu<->raspberry
+
+vcc - 3.3 volts
+gnd - terra
+SDA - I2C
+SCL -  I2C
