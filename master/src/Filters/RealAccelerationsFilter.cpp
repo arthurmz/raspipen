@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <cstdio>
-#include "../Physics/Physics.h"
+#include "Physics/Physics.h"
 
 #define G_FORCE_X 4000
 #define G_FORCE_Y 4000
