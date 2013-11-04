@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <cstdio>
-#include "../Physics/Physics.h"
+#include "Physics/Physics.h"
 
 #define G_FORCE_X 4000
 #define G_FORCE_Y 4000
@@ -28,19 +28,21 @@ int main(){
 
   while(true){//Processa os dados indefinidamente.
        
-    string str;
-    getline (cin,str);
+    	string str;
+    	getline (cin,str);
 
-    float EulerX, EulerY, EulerZ, AccX, AccY, AccZ;
+    	float EulerX, EulerY, EulerZ, AccX, AccY, AccZ;
     
-    sscanf(str.c_str(), "%f %f %f %f %f %f", &EulerX, &EulerY, &EulerZ, &AccX, &AccY, &AccZ);
-
-    float RealX = realAcceleration(AccX, G_FORCE_X);
-    float RealY = realAcceleration(AccY, G_FORCE_Y);
-    float RealZ = realAcceleration(AccZ, G_FORCE_Z);
+    	if (sscanf(str.c_str(), "%f %f %f %f %f %f", &EulerX, &EulerY, &EulerZ, &AccX, &AccY, &AccZ) == 6){
+	
+    	float RealX = realAcceleration(AccX, G_FORCE_X);
+    	float RealY = realAcceleration(AccY, G_FORCE_Y);
+    	float RealZ = realAcceleration(AccZ, G_FORCE_Z);
     
-    cout << EulerX << " " << EulerY << " " << EulerZ << " " << RealX << " " << RealY << " " << RealZ << "\n"; 
-  }
+    	cout << EulerX << " " << EulerY << " " << EulerZ << " " << RealX << " " << RealY << " " << RealZ << "\n"; 
+ 
+	}
+ }
   
  return 0; 
 }
