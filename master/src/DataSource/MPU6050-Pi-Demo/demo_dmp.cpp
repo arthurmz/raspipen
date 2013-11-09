@@ -143,8 +143,10 @@ void loop() {
             // display Euler angles in degrees
             mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetEuler(euler, &q);
-            printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
-        #endif
+            //printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
+            printf("%7.2f %7.2f %7.2f ", euler[2] * 180/M_PI, euler[1] * 180/M_PI, euler[0] * 180/M_PI);
+
+	 #endif
 
         #ifdef OUTPUT_READABLE_YAWPITCHROLL
             // display Euler angles in degrees
@@ -160,8 +162,10 @@ void loop() {
             mpu.dmpGetAccel(&aa, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-            printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
-        #endif
+            printf("%6d %6d %6d", aaReal.x, aaReal.y, aaReal.z);
+            //printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
+
+	#endif
 
         #ifdef OUTPUT_READABLE_WORLDACCEL
             // display initial world-frame acceleration, adjusted to remove gravity
@@ -171,8 +175,8 @@ void loop() {
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
             printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
-        #endif
-    
+	#endif
+
         #ifdef OUTPUT_TEAPOT
             // display quaternion values in InvenSense Teapot demo format:
             teapotPacket[2] = fifoBuffer[0];
@@ -192,7 +196,7 @@ void loop() {
 
 int main() {
     setup();
-    usleep(100000);
+    usleep(200000);
     for (;;)
         loop();
 
