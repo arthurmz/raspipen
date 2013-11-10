@@ -1,4 +1,5 @@
 #pragma once
+#define G_FORCE 9806.65 //milimeters per second at square
 
 /* vel - milimeter per second
  time - second

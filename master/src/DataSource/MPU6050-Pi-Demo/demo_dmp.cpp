@@ -136,6 +136,7 @@ void loop() {
         // read a packet from FIFO
         mpu.getFIFOBytes(fifoBuffer, packetSize);
         
+	SixDegreesOfFreedom output;
         #ifdef OUTPUT_READABLE_QUATERNION
             // display quaternion values in easy matrix form: w x y z
             mpu.dmpGetQuaternion(&q, fifoBuffer);
@@ -147,7 +148,11 @@ void loop() {
             mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetEuler(euler, &q);
             //printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
-            printf("%7.2f %7.2f %7.2f ", euler[2] * 180/M_PI, euler[1] * 180/M_PI, euler[0] * 180/M_PI);
+            //printf("%7.2f %7.2f %7.2f ", euler[2] * 180/M_PI, euler[1] * 180/M_PI, euler[0] * 180/M_PI);
+	    //Em vez de jogar na tela, chama a função de callback.	    
+	    output.EX = euler[2] * 180/M_PI;
+	    output.EY = euler[1] * 180/M_PI;
+	    output.EZ = euler[0] * 180/M_PI;
 
 	 #endif
 
@@ -165,9 +170,13 @@ void loop() {
             mpu.dmpGetAccel(&aa, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-            printf("%6d %6d %6d", aaReal.x, aaReal.y, aaReal.z);
+            //printf("%6d %6d %6d", aaReal.x, aaReal.y, aaReal.z);
             //printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
 
+	    //Em vez de jogar na tela, chama a função de callback.
+	    output.AX = aaReal.x;
+	    output.AY = aaReal.y;
+	    output.AZ = aaReal.z;
 	#endif
 
         #ifdef OUTPUT_READABLE_WORLDACCEL
@@ -193,7 +202,8 @@ void loop() {
             Serial.write(teapotPacket, 14);
             teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
         #endif
-        printf("\n");
+        dataHandler(output);
+	printf("\n");
     }
 }
 
@@ -209,7 +219,4 @@ void StartReading(void (*callback) (SixDegreesOfFreedom)){
 
 }
 
-void dummy(int a){
-	
-	printf("%d", a);
-}
+

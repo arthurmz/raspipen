@@ -1,7 +1,7 @@
 #include <stdlib.h>
+#include "Physics.h"
 using namespace std;
 
-#define G_FORCE 9806.65 //milimeters per second at square
 
 float deslEscalar(float vel, float time, float acel){
 	return (vel*time)+ ((acel*time*time)/2);
