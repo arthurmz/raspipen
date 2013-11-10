@@ -6,6 +6,7 @@
 #include <math.h>
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
+#include "SixDegreesOfFreedom.h"
 
 // class default I2C address is 0x68
 // specific I2C addresses may be passed as a parameter here
@@ -68,6 +69,8 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 // packet structure for InvenSense teapot demo
 uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
 
+//pointer to the data handler function
+void (*dataHandler) (SixDegreesOfFreedom);
 
 // ================================================================
 // ===                      INITIAL SETUP                       ===
@@ -194,12 +197,19 @@ void loop() {
     }
 }
 
-int main() {
-    setup();
-    usleep(200000);
-    for (;;)
-        loop();
 
-    return 0;
+
+void StartReading(void (*callback) (SixDegreesOfFreedom)){
+    
+	dataHandler = callback;
+	setup();
+    	usleep(200000);
+    	for (;;)
+        	loop();
+
 }
 
+void dummy(int a){
+	
+	printf("%d", a);
+}
