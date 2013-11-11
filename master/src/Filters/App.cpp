@@ -32,9 +32,23 @@ SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
 	
 	//Definindo o vetor de gravidade de acordo com a orientação
 	
-	float gx = G_FORCE * cos(PI* inp.EY/180) * cos(PI * inp.EZ/180);
-	float gy = G_FORCE * cos(PI* inp.EX/180) * cos(PI * inp.EZ/180);
-	float gz = G_FORCE * cos(PI* inp.EX/180) * cos(PI * inp.EY/180);//ok
+	float gx = 0;
+	float gy = 0;
+	float gz = G_FORCE;
+
+
+	//Aplicando rotação X
+	gy = G_FORCE * cos(inp.EX);
+	gz = G_FORCE * sen(inp.EX);
+	
+	//Aplicando rotação Y
+	gx = G_FORCE * cos(inp.EY);
+	gz = G_FORCE * cos(inp.EY);
+	
+	//Aplicando rotação Z
+	gx = G_FORCE * cos(inp.EZ);
+	gy = G_FORCE * sen(inp.EZ);
+
 	
 	//Subtraindo a gravidade da aceleração lida
 	SixDegreesOfFreedom out;
