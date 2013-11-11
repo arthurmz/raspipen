@@ -80,10 +80,10 @@ void test(SixDegreesOfFreedom sixDoF){
 
 int main (){
 
-void (*callback)(SixDegreesOfFreedom);
-callback = &test;
+	void (*callback)(SixDegreesOfFreedom);
+	callback = &test;
 
-StartReading(callback);
+	StartReading(callback);
 
-return 0;
+	return 0;
 }
