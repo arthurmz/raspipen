@@ -203,7 +203,7 @@ void loop() {
             teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
         #endif
         dataHandler(output);
-	printf("\n");
+	//printf("\n");
     }
 }
 
