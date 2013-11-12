@@ -38,16 +38,16 @@ SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
 
 
 	//Aplicando rotação X
-	gy = G_FORCE * cos(inp.EX);
-	gz = G_FORCE * sen(inp.EX);
+	gy = G_FORCE * cos(inp.EX*PI/180);
+	gz = G_FORCE * sin(inp.EX*PI/180);
 	
 	//Aplicando rotação Y
-	gx = G_FORCE * cos(inp.EY);
-	gz = G_FORCE * cos(inp.EY);
+	gx = G_FORCE * cos(inp.EY*PI/180);
+	gz = G_FORCE * sin(inp.EY*PI/180);
 	
 	//Aplicando rotação Z
-	gx = G_FORCE * cos(inp.EZ);
-	gy = G_FORCE * sen(inp.EZ);
+	gx = G_FORCE * cos(inp.EZ*PI/180);
+	gy = G_FORCE * sin(inp.EZ*PI/180);
 
 	
 	//Subtraindo a gravidade da aceleração lida
@@ -60,7 +60,7 @@ SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
 	out.AZ = inp.AZ - gz;
 	
 	cout << setiosflags(ios::fixed) << setprecision(2) << "input " << inp.EX << " "  << inp.EY << " " << inp.EZ << " " << inp.AX << " " << inp.AY << " " << inp.AZ;
-        cout << setiosflags(ios::fixed) << setprecision(2) << " output " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ;
+        cout << setiosflags(ios::fixed) << setprecision(2) << " output " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ << "\n";
 
 	return out;
 
@@ -79,8 +79,8 @@ SixDegreesOfFreedom compensaVetorDeslocamento(SixDegreesOfFreedom inp){
         out.AZ = inp.AZ * cos(PI * inp.EX/180) * cos(PI * inp.EY/180);
 
 
-        //cout << setiosflags(ios::fixed) << setprecision(2) << "input " << inp.EX << " "  << inp.EY << " " << inp.EZ << " " << inp.AX << " " << inp.AY << " " << inp.AZ;
-	//cout << setiosflags(ios::fixed) << setprecision(2) << " output " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ;
+        //cout << setiosflags(ios::fixed) << setprecision(2) << "input " << inp.EX << " "  << inp.EY << " " << inp.EZ << " " << inp.AX << " " << inp.AY << " " << inp.AZ << "\n";
+	//cout << setiosflags(ios::fixed) << setprecision(2) << " output " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ << "\n";
 
         return out;
 }
