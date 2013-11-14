@@ -7,9 +7,15 @@
 #include "../DataSource/MPU6050-Pi-Demo/demo_dmp.h"
 
 #define PI 3.141592653589793
-#define G_FORCE_X 4300
-#define G_FORCE_Y 4300
-#define G_FORCE_Z 4300
+//Definindo os valores de aceleração 1G
+#define GYRO_G_FORCE_X 4300
+#define GYRO_G_FORCE_Y 4300
+#define GYRO_G_FORCE_Z 4300
+
+//Soma será aplicado a cada ângulo, já que o mesmo pode estar desalinhado com o acelerometro
+#define OFFSET_ANGLE_X 0
+#define OFFSET_ANGLE_Y 0
+#define OFFSET_ANGLE_Z 0
 
 using namespace std;
 
@@ -20,44 +26,61 @@ SixDegreesOfFreedom calculeVelocidadeReal(SixDegreesOfFreedom inp){
 	out.EX = inp.EX;
 	out.EY = inp.EY;
 	out.EZ = inp.EZ;
-	out.AX = realAcceleration(inp.AX, G_FORCE_X);
-        out.AY = realAcceleration(inp.AY, G_FORCE_Y);
-        out.AZ = realAcceleration(inp.AZ, G_FORCE_Z);
+	out.AX = realAcceleration(inp.AX, GYRO_G_FORCE_X);
+        out.AY = realAcceleration(inp.AY, GYRO_G_FORCE_Y);
+        out.AZ = realAcceleration(inp.AZ, GYRO_G_FORCE_Z);
 	//cout << "Callback " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ;
 
 	return out;
 }
 
+
+SixDegreesOfFreedom alinharValoresGiroscopioAcelerometro(SixDegreesOfFreedom inp){
+	//Aplicando a adição aos angulos(caso estejam desalinhados com o acelerometro)
+	inp.EX+=OFFSET_ANGLE_X;
+	inp.EY+=OFFSET_ANGLE_Y;
+	inp.EZ+=OFFSET_ANGLE_Z;
+	return inp;
+}
+
+SixDegreesOfFreedom grausParaRadianos(SixDegreesOfFreedom inp){
+	inp.EX = inp.EX*PI/180;
+	inp.EY = inp.EY*PI/180;
+	inp.EZ = inp.EZ*PI/180;
+	return inp;
+}
+
 SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
 	
-	//Definindo o vetor de gravidade de acordo com a orientação
+	//Definindo o vetor de gravidade inicial
+	SixDegreesOfFreedom gravity;
 	
-	float gx = 0;
-	float gy = 0;
-	float gz = G_FORCE;
+	gravity.AX = 0;
+	gravity.AY = 0;
+	gravity.AZ = G_FORCE;
 
+	//==============================================	
+	//Primeiro deslocamento, plano xy
+	gravity.AX = gravity.AX * cos(inp.EZ);
+	gravity.AY = gravity.AY * sin(inp.EZ);
 
-	//Aplicando rotação X
-	gy = G_FORCE * cos(inp.EX*PI/180);
-	gz = G_FORCE * sin(inp.EX*PI/180);
-	
-	//Aplicando rotação Y
-	gx = G_FORCE * cos(inp.EY*PI/180);
-	gz = G_FORCE * sin(inp.EY*PI/180);
-	
-	//Aplicando rotação Z
-	gx = G_FORCE * cos(inp.EZ*PI/180);
-	gy = G_FORCE * sin(inp.EZ*PI/180);
+	//Segundo deslocamento, plano yz
+	gravity.AY = gravity.AY * cos(inp.EX);
+	gravity.AZ = gravity.AZ * sin(inp.EX);
 
+	//Terceito deslocamento, plano zx
+	gravity.AZ = gravity.AZ * cos(inp.EY);
+	gravity.AX = gravity.AX * sin(inp.EY);
+	//===============================================
 	
 	//Subtraindo a gravidade da aceleração lida
 	SixDegreesOfFreedom out;
 	out.EX = inp.EX;
 	out.EY = inp.EY;
 	out.EZ = inp.EZ;
-	out.AX = inp.AX - gx;
-	out.AY = inp.AY - gy;
-	out.AZ = inp.AZ - gz;
+	out.AX = inp.AX - gravity.AX;
+	out.AY = inp.AY - gravity.AY;
+	out.AZ = inp.AZ - gravity.AZ;
 	
 	cout << setiosflags(ios::fixed) << setprecision(2) << "input " << inp.EX << " "  << inp.EY << " " << inp.EZ << " " << inp.AX << " " << inp.AY << " " << inp.AZ;
         cout << setiosflags(ios::fixed) << setprecision(2) << " output " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ << "\n";
@@ -87,15 +110,24 @@ SixDegreesOfFreedom compensaVetorDeslocamento(SixDegreesOfFreedom inp){
 
 
 	
-void test(SixDegreesOfFreedom sixDoF){
+void doThings(SixDegreesOfFreedom sixDoF){
         //cout << "Callback " << sixDoF.EX << " "  << sixDoF.EY << " " << sixDoF.EZ << " " << sixDoF.AX << " " << sixDoF.AY << " " << sixDoF.AZ;
-        removeAceleracaoGravidade ( calculeVelocidadeReal(sixDoF) );
+        //compensaVetorDeslocamento
+	//removeAceleracaoGravidade
+	//grausParaRadianos
+	//alinharValoresGyroscopioAcelerometro
+	
+	SixDegreesOfFreedom hue = alinharValoresGiroscopioAcelerometro(sixDoF);
+	SixDegreesOfFreedom hha = grausParaRadianos(hue);
+	SixDegreesOfFreedom lala = removeAceleracaoGravidade(hha);
+	//SixDegreesOfFreedom poh = compensaVetorDeslocamento(lala);
+
 }
 
 int main (){
 
 	void (*callback)(SixDegreesOfFreedom);
-	callback = &test;
+	callback = &doThings;
 
 	StartReading(callback);
 
