@@ -10,6 +10,7 @@ void *startSensor(void* arg){
 	gyro.start();
 }
 
+
 int main() {
 	
 	/*Turn on the thread sensor*/
@@ -23,3 +24,4 @@ int main() {
 	
 return 0;
 }
+
