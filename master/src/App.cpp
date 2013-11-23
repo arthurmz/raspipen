@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "Gyroscope/Gyroscope.h"
+#include <Gyroscope.h>
 #include <iostream>
 
 void *startSensor(void* arg){

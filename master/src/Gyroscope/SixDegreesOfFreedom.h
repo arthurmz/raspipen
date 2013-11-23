@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SIX_DEGREES_OF_FREEDOM_
+#define _SIX_DEGREES_OF_FREEDOM_
 
 struct SixDegreesOfFreedom {
 //Angulos de euler
@@ -11,3 +12,4 @@ float AY;
 float AZ;
 };
 
+#endif //Defines SDoF
