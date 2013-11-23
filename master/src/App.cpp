@@ -3,22 +3,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "Gyroscope.h"
+#include "Gyroscope/Gyroscope.h"
 #include <iostream>
 
 void *startSensor(void* arg){
-	//Gyroscope gyro;
-	//gyro.start();
-	while(true){
-		std::cout << "Sensor 1\n";
-		usleep(100000);
-	}
+	Gyroscope gyro;
+	gyro.start();
 }
 
 
 int main() {
 	
-	/*Turn on the thread sensor*/
+	/*Starting the sensor's thread*/
 	pthread_t sensorThread;
 	int result;
 	result = pthread_create(&sensorThread, NULL, startSensor, NULL);
