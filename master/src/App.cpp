@@ -8,7 +8,7 @@
 #include <SixDegreesOfFreedom.h>
 
 void ProcessData(SixDegreesOfFreedom d){
-	
+	std::cout << d.EX << "\n";	
 }
 
 void *startSensor(void* arg){
