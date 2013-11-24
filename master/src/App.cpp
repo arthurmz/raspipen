@@ -27,6 +27,7 @@ void Producer(SixDegreesOfFreedom d){
 void Consumer(){
 	
 }
+
 void *startSensor(void* arg){
 	int value;
 	//Here should be passed a funcion with pattern: void (*) SixDegreesOfFreedom
