@@ -3,12 +3,12 @@
 
 all: raspipen
 
-raspipen: App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o Gyroscope/ProcessGyroscopeData.o
-	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o Gyroscope/ProcessGyroscopeData.o -lpthread -std=c++11 -pedantic
+raspipen: App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o
+	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o -lpthread -std=c++11 -pedantic
 
 App.o: App.cpp
-	g++ -o App.o -c App.cpp -I Gyroscope/ -lpthread -std=c++11 -pedantic
-
+	g++ -o App.o -c App.cpp -I Gyroscope/ -I DataProcessing/ -lpthread -std=c++11 -pedantic
+##########Gyroscope######################
 Gyroscope/Gyroscope.o: Gyroscope/Gyroscope.cpp
 	g++ -o Gyroscope/Gyroscope.o -c Gyroscope/Gyroscope.cpp -lpthread -std=c++11 -pedantic
 
@@ -18,12 +18,18 @@ Gyroscope/I2Cdev.o: Gyroscope/I2Cdev.cpp
 Gyroscope/MPU6050.o: Gyroscope/MPU6050.cpp
 	g++ -o Gyroscope/MPU6050.o -c Gyroscope/MPU6050.cpp -lpthread -std=c++11 -pedantic
 
-Gyroscope/ProcessGyroscopeData.o:
-	g++ -o Gyroscope/ProcessGyroscopeData.o -c Gyroscope/ProcessGyroscopeData.cpp -lpthread -std=c++11 -pedantic
+#########Data Processing#################
+DataProcessing/ProcessGyroscopeData.o:
+	g++ -o DataProcessing/ProcessGyroscopeData.o -c DataProcessing/ProcessGyroscopeData.cpp -I Gyroscope -lpthread -std=c++11 -pedantic
 
+DataProcessing/Physics.o:
+	g++ -o DataProcessing/Physics/Physics.o -c DataProcessing/Physics/Physics.cpp
+
+########Clean up########################
 clean:
 	rm -rf *.o
 	rm -rf Gyroscope/*.o
+	rm -rf DataProcessing/*.o
 mrproper: clean
 	rm -rf rppen
 

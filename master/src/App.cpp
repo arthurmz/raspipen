@@ -6,19 +6,20 @@
 #include <Gyroscope.h>
 #include <ProcessGyroscopeData.h>
 #include <SixDegreesOfFreedom.h>
-
+#include <ThreeDegreesOfFreedom.h>
 
 pthread_mutex_t mutex;
 pthread_cond_t cond;
 
-SixDegreesOfFreedom bufferProcessedData[100];
+ThreeDegreesOfFreedom bufferProcessedData[100];
 
-int loops = 5;
 int length = 0;
 
 void Producer(SixDegreesOfFreedom d){
+	//Process the data from a SixDegreesOfFreedom type to a ThreeDegreesOfFreedom type (xyz relative position)
+	ThreeDegreesOfFreedom relativePosition = ProcessGyroscopeData(d);
 	pthread_mutex_lock(&mutex);
-	bufferProcessedData[length++] = ProcessGyroscopeData(d);
+	bufferProcessedData[length++] = relativePosition;
 	pthread_cond_signal(&cond);
 	pthread_mutex_unlock(&mutex);		
 }
@@ -29,8 +30,8 @@ void Consumer(){
 }
 
 void *startSensor(void* arg){
-	int value;
-	//Here should be passed a funcion with pattern: void (*) SixDegreesOfFreedom
+	//Here we start the sensor passing the callback function to handle the raw values
+	//should be passed a funcion with pattern: void (*) SixDegreesOfFreedom
 	GyroscopeStartReading(&Producer);
 }
 
