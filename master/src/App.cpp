@@ -3,18 +3,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <iostream>
 #include <Gyroscope.h>
+#include <ProcessGyroscopeData.h>
 #include <SixDegreesOfFreedom.h>
 
-void ProcessData(SixDegreesOfFreedom d){
-	std::cout << d.EX << "\n";	
+
+pthread_mutex_t mutex;
+pthread_cond_t cond;
+
+SixDegreesOfFreedom bufferProcessedData[100];
+
+int loops = 5;
+int length = 0;
+
+void Producer(SixDegreesOfFreedom d){
+	pthread_mutex_lock(&mutex);
+	bufferProcessedData[length++] = ProcessGyroscopeData(d);
+	pthread_cond_signal(&cond);
+	pthread_mutex_unlock(&mutex);		
 }
 
+
+void Consumer(){
+	
+}
 void *startSensor(void* arg){
 	int value;
 	//Here should be passed a funcion with pattern: void (*) SixDegreesOfFreedom
-	GyroscopeStartReading(&ProcessData);
+	GyroscopeStartReading(&Producer);
 }
 
 
