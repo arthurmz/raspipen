@@ -3,12 +3,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <Gyroscope.h>
 #include <iostream>
+#include <Gyroscope.h>
+#include <SixDegreesOfFreedom.h>
+
+void ProcessData(SixDegreesOfFreedom d){
+	
+}
 
 void *startSensor(void* arg){
-	Gyroscope gyro;
-	gyro.start();
+	int value;
+	//Here should be passed a funcion with pattern: void (*) SixDegreesOfFreedom
+	GyroscopeStartReading(&ProcessData);
 }
 
 
