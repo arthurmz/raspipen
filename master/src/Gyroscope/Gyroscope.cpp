@@ -146,15 +146,15 @@ void loop() {
         #endif
 
         #ifdef OUTPUT_READABLE_EULER
-            // display Euler angles in degrees
+            // display Euler angles in radians
             mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetEuler(euler, &q);
             //printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
             //printf("%7.2f %7.2f %7.2f ", euler[2] * 180/M_PI, euler[1] * 180/M_PI, euler[0] * 180/M_PI);
 	    //Em vez de jogar na tela, chama a função de callback.	    
-	    output.EX = euler[2] * 180/M_PI;
-	    output.EY = euler[1] * 180/M_PI;
-	    output.EZ = euler[0] * 180/M_PI;
+	    output.EX = euler[2];
+	    output.EY = euler[1];
+	    output.EZ = euler[0];
 
 	 #endif
 

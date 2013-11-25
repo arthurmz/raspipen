@@ -46,13 +46,6 @@ SixDegreesOfFreedom alinharValoresGiroscopioAcelerometro(SixDegreesOfFreedom inp
 	inp.EZ+=OFFSET_ANGLE_Z;
 	return inp;
 }
-/*Converte os valores dos angulos de graus para radianos, que é a medida padrão usada nas funções de math.h sin e cos*/
-SixDegreesOfFreedom grausParaRadianos(SixDegreesOfFreedom inp){
-	inp.EX = inp.EX*PI/180;
-	inp.EY = inp.EY*PI/180;
-	inp.EZ = inp.EZ*PI/180;
-	return inp;
-}
 
 /*Subtrai o vetor de gravidade (9.8m/s²) da medida de entrada do sensor
   Desse modo, estando o sensor em repouso sobre a terra, a aceleração medida deve ser (0,0,0)
@@ -67,17 +60,12 @@ SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
 	gravity.AZ = G_FORCE;
 
 	//==============================================	
-	//Primeiro deslocamento, plano xy
-	gravity.AX = gravity.AX * cos(inp.EZ);
-	gravity.AY = gravity.AY * sin(inp.EZ);
+	
 
-	//Segundo deslocamento, plano yz
-	gravity.AY = gravity.AY * cos(inp.EX);
-	gravity.AZ = gravity.AZ * sin(inp.EX);
-
-	//Terceito deslocamento, plano zx
-	gravity.AZ = gravity.AZ * cos(inp.EY);
-	gravity.AX = gravity.AX * sin(inp.EY);
+	gravity.AX = gravity.AX * sin(inp.EY) * cos(inp.EZ);
+	gravity.AY = gravity.AY * sin(inp.EZ) * cos(inp.EX);
+	gravity.AZ = gravity.AZ * sin(inp.EX) * cos(inp.EY);
+	
 	//===============================================
 	
 	//Subtraindo a gravidade da aceleração lida
@@ -89,9 +77,6 @@ SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
 	out.AY = inp.AY - gravity.AY;
 	out.AZ = inp.AZ - gravity.AZ;
 	
-	cout << setiosflags(ios::fixed) << setprecision(2) << "input " << inp.EX << " "  << inp.EY << " " << inp.EZ << " " << inp.AX << " " << inp.AY << " " << inp.AZ;
-        cout << setiosflags(ios::fixed) << setprecision(2) << " output " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ << "\n";
-
 	return out;
 
 }
@@ -117,28 +102,20 @@ SixDegreesOfFreedom compensaVetorDeslocamento(SixDegreesOfFreedom inp){
 
 
 	
-void doThings(SixDegreesOfFreedom sixDoF){
-        //cout << "Callback " << sixDoF.EX << " "  << sixDoF.EY << " " << sixDoF.EZ << " " << sixDoF.AX << " " << sixDoF.AY << " " << sixDoF.AZ;
-        //compensaVetorDeslocamento
-	//removeAceleracaoGravidade
-	//grausParaRadianos
-	//alinharValoresGyroscopioAcelerometro
-	
-	SixDegreesOfFreedom hue = alinharValoresGiroscopioAcelerometro(sixDoF);
-	SixDegreesOfFreedom hha = grausParaRadianos(hue);
-	SixDegreesOfFreedom lala = removeAceleracaoGravidade(hha);
-	//SixDegreesOfFreedom poh = compensaVetorDeslocamento(lala);
-
-}
-
-
 ThreeDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom sixDoF){
-	SixDegreesOfFreedom result1 = alinharValoresGiroscopioAcelerometro(sixDoF);
+	/*SixDegreesOfFreedom result1 = alinharValoresGiroscopioAcelerometro(sixDoF);
 	SixDegreesOfFreedom result2 = grausParaRadianos(result1);
 	SixDegreesOfFreedom result3 = removeAceleracaoGravidade(result2);
 	ThreeDegreesOfFreedom result4;
 	result4.X = result3.AX;
 	result4.Y = result3.AY;
 	result4.Z = result3.AZ;
-	return result4;
+	return result4;*/
+	
+	cout << sixDoF.EX << " " << sixDoF.EY << " " << sixDoF.EZ << " " << sixDoF.AX << " " << sixDoF.AY << " " << sixDoF.AZ << "\n";
+	SixDegreesOfFreedom sixDoFSemG = removeAceleracaoGravidade(sixDoF);	
+	cout << sixDoFSemG.EX << " " << sixDoFSemG.EY << " " << sixDoFSemG.EZ << " " << sixDoFSemG.AX << " " << sixDoFSemG.AY << " " << sixDoFSemG.AZ << "\n";
+	
+	ThreeDegreesOfFreedom f;
+	return f;
 }
