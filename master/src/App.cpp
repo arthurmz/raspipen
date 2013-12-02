@@ -12,23 +12,23 @@ pthread_mutex_t mutex;
 pthread_cond_t cond;
 
 ThreeDegreesOfFreedom bufferProcessedData[100];
-ThreeDegreesOfFreedom actualState;
+SixDegreesOfFreedom actualReading;
 
 int length = 0;
 
 void Producer(SixDegreesOfFreedom d){
-	//Process the data from a SixDegreesOfFreedom type to a ThreeDegreesOfFreedom type (xyz relative position)
-	ThreeDegreesOfFreedom relativePosition = ProcessGyroscopeData(d);
+
 	pthread_mutex_lock(&mutex);
-	//bufferProcessedData[length++] = relativePosition;
-	actualState = relativePosition;
+
+	actualState = d;
+
 	pthread_cond_signal(&cond);
-	pthread_mutex_unlock(&mutex);		
+	pthread_mutex_unlock(&mutex);
 }
 
 
 void Consumer(){
-	
+
 }
 
 void *startSensor(void* arg){

@@ -55,10 +55,10 @@ void rotacaoZ(float vetor[3], float anguloz){
 int main(){
 	float vetor[3];
 	vetor[0] = 1;
-	vetor[1] = 1;
+	vetor[1] = 0;
 	vetor[2] = 1;
 	
-	rotacaoX(vetor, 30);
+	rotacaoX(vetor, 90);
 	//rotacaoY(vetor, 30);
 	//rotacaoZ(vetor, 30);
 	for(int i = 0; i < 3; i++){
