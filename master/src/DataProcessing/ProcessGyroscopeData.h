@@ -1,3 +1,6 @@
 #include <ThreeDegreesOfFreedom.h>
+#include <SixDegreesOfFreedom.h>
 
-ThreeDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom d);
+SixDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom d);
+
+SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp);

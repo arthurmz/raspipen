@@ -1,5 +1,8 @@
 #pragma once
 #define G_FORCE 9806.65 //milimeters per second at square
+#define G_FORCE_RAW_X 4250
+#define G_FORCE_RAW_Y 4250
+#define G_FORCE_RAW_Z 4131
 
 /* vel - milimeter per second
  time - second

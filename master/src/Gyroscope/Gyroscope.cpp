@@ -152,9 +152,9 @@ void loop() {
             //printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
             //printf("%7.2f %7.2f %7.2f ", euler[2] * 180/M_PI, euler[1] * 180/M_PI, euler[0] * 180/M_PI);
 	    //Em vez de jogar na tela, chama a função de callback.	    
-	    output.EX = euler[2];
-	    output.EY = euler[1];
-	    output.EZ = euler[0];
+	    output.EX = (euler[2]*180/M_PI)-6;
+	    output.EY = (euler[1]*180/M_PI);
+	    output.EZ = (euler[0]*180/M_PI)+4;
 
 	 #endif
 

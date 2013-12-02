@@ -3,8 +3,8 @@
 
 all: raspipen
 
-raspipen: App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o
-	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o -lpthread -pedantic
+raspipen: App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o
+	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o -lpthread -pedantic
 
 App.o: App.cpp
 	g++ -o App.o -c App.cpp -I Gyroscope/ -I DataProcessing/ -lpthread -pedantic
@@ -22,9 +22,11 @@ Gyroscope/MPU6050.o: Gyroscope/MPU6050.cpp
 DataProcessing/ProcessGyroscopeData.o:
 	g++ -o DataProcessing/ProcessGyroscopeData.o -c DataProcessing/ProcessGyroscopeData.cpp -I Gyroscope -lpthread -pedantic
 
-DataProcessing/Physics.o:
+DataProcessing/Physics/Physics.o:
 	g++ -o DataProcessing/Physics/Physics.o -c DataProcessing/Physics/Physics.cpp
 
+DataProcessing/Physics/Rotation.o:
+	g++ -o DataProcessing/Physics/Rotation.o -c DataProcessing/Physics/Rotation.cpp
 ########Clean up########################
 clean:
 	rm -rf *.o

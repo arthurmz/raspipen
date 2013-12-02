@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cmath>
+#include "Rotation.h"
+
 using namespace std;
 
 void rotacaoVetor(float angulo, float ux, float uy, float uz, float r[][3]){
@@ -30,7 +32,7 @@ void multiplicar(float matriz[][3], float vet[3]){
 
 void arredondar(float vetor[3]){
 	for(int i = 0; i < 3; i++){
-		if(vetor[i] < 0.0001){
+		if(vetor[i] < 0.0001 && vetor[i] > -0.0001){
 			vetor[i] = 0;
 		}
 	}	
@@ -61,16 +63,23 @@ void rotacaoZ(float vetor[3], float anguloz){
 	
 	
 
-int main(){
-	float vetor[3];
-	vetor[0] = 1;
-	vetor[1] = 0;
-	vetor[2] = 1;
-	
-	rotacaoX(vetor, 90);
-	//rotacaoY(vetor, 30);
-	//rotacaoZ(vetor, 30);
-	for(int i = 0; i < 3; i++){
-			cout << vetor[i] <<"\t";
-	}
+void ApplyRotation(float input[6]){//three angles and three accelerations
+
+
+
+	//three positions
+	float accVector[3];
+	accVector[0] = input[3];
+	accVector[1] = input[4];
+	accVector[2] = input[5];
+
+	rotacaoX(accVector, input[0]);
+	rotacaoY(accVector, input[1]);
+	rotacaoZ(accVector, input[2]);
+
+	//setting back
+
+	input[3] = accVector[0];
+	input[4] = accVector[1];
+	input[5] = accVector[2];
 }

@@ -1,16 +1,14 @@
 #include <SixDegreesOfFreedom.h>
+#include <ThreeDegreesOfFreedom.h>
 #include <iostream>
 #include <cstdio>
 #include <iomanip>
 #include <math.h>
 #include "Physics/Physics.h"
 #include "ProcessGyroscopeData.h"
+#include "Physics/Rotation.h"
 
 #define PI 3.141592653589793
-//Definindo os valores de aceleração 1G
-#define GYRO_G_FORCE_X 4300
-#define GYRO_G_FORCE_Y 4300
-#define GYRO_G_FORCE_Z 4300
 
 //Soma será aplicado a cada ângulo, já que o mesmo pode estar desalinhado com o acelerometro
 #define OFFSET_ANGLE_X 0
@@ -21,14 +19,14 @@ using namespace std;
 
 
 SixDegreesOfFreedom calculeVelocidadeReal(SixDegreesOfFreedom inp){
-	
+
 	SixDegreesOfFreedom out;
 	out.EX = inp.EX;
 	out.EY = inp.EY;
 	out.EZ = inp.EZ;
-	out.AX = realAcceleration(inp.AX, GYRO_G_FORCE_X);
-        out.AY = realAcceleration(inp.AY, GYRO_G_FORCE_Y);
-        out.AZ = realAcceleration(inp.AZ, GYRO_G_FORCE_Z);
+	out.AX = realAcceleration(inp.AX, G_FORCE_RAW_X );
+        out.AY = realAcceleration(inp.AY, G_FORCE_RAW_Y );
+        out.AZ = realAcceleration(inp.AZ, G_FORCE_RAW_Z );
 	//cout << "Callback " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ;
 
 	return out;
@@ -50,35 +48,36 @@ SixDegreesOfFreedom alinharValoresGiroscopioAcelerometro(SixDegreesOfFreedom inp
 /*Subtrai o vetor de gravidade (9.8m/s²) da medida de entrada do sensor
   Desse modo, estando o sensor em repouso sobre a terra, a aceleração medida deve ser (0,0,0)
 */
+
 SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
-	
-	//Definindo o vetor de gravidade inicial
-	SixDegreesOfFreedom gravity;
-	
-	gravity.AX = 0;
-	gravity.AY = 0;
-	gravity.AZ = G_FORCE;
 
-	//==============================================	
-	
+	float vector[6];
+	vector[0] = inp.EX;
+	vector[1] = inp.EY;
+	vector[2] = inp.EZ;
+	vector[3] = inp.AX;
+	vector[4] = inp.AY;
+	vector[5] = inp.AZ;
 
-	gravity.AX = gravity.AX * sin(inp.EY) * cos(inp.EZ);
-	gravity.AY = gravity.AY * sin(inp.EZ) * cos(inp.EX);
-	gravity.AZ = gravity.AZ * sin(inp.EX) * cos(inp.EY);
+	float gravity[6];
+	gravity[0] = inp.EX;
+	gravity[1] = inp.EY;
+	gravity[2] = inp.EZ;
+	gravity[3] = 0;
+	gravity[4] = 0;
+	gravity[5] = G_FORCE_RAW_Z;
+	cout << "gravity before: " << gravity[0] << " " << gravity[1] << " " << gravity[2] << " " << gravity[3] << " " << gravity[4] << " " << gravity[5] << "\n";
 	
-	//===============================================
-	
-	//Subtraindo a gravidade da aceleração lida
-	SixDegreesOfFreedom out;
-	out.EX = inp.EX;
-	out.EY = inp.EY;
-	out.EZ = inp.EZ;
-	out.AX = inp.AX - gravity.AX;
-	out.AY = inp.AY - gravity.AY;
-	out.AZ = inp.AZ - gravity.AZ;
-	
-	return out;
+	//ApplyRotation(vector);
+	ApplyRotation(gravity);
 
+	cout << "gravity translated: " << gravity[0] << " " << gravity[1] << " " << gravity[2] << " " << gravity[3] << " " << gravity[4] << " " << gravity[5] << "\n";
+
+	inp.AX -= gravity[3];
+	inp.AY -= gravity[4];
+	inp.AZ -= gravity[5];
+
+	return inp;
 }
 
 //Recebe como entrada os 3 angulos de orientação e o vetor de deslocamento
@@ -101,8 +100,8 @@ SixDegreesOfFreedom compensaVetorDeslocamento(SixDegreesOfFreedom inp){
 }
 
 
-	
-ThreeDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom sixDoF){
+
+SixDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom sixDoF){
 	/*SixDegreesOfFreedom result1 = alinharValoresGiroscopioAcelerometro(sixDoF);
 	SixDegreesOfFreedom result2 = grausParaRadianos(result1);
 	SixDegreesOfFreedom result3 = removeAceleracaoGravidade(result2);
@@ -111,11 +110,7 @@ ThreeDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom sixDoF){
 	result4.Y = result3.AY;
 	result4.Z = result3.AZ;
 	return result4;*/
-	
-	cout << sixDoF.EX << " " << sixDoF.EY << " " << sixDoF.EZ << " " << sixDoF.AX << " " << sixDoF.AY << " " << sixDoF.AZ << "\n";
-	SixDegreesOfFreedom sixDoFSemG = removeAceleracaoGravidade(sixDoF);	
-	cout << sixDoFSemG.EX << " " << sixDoFSemG.EY << " " << sixDoFSemG.EZ << " " << sixDoFSemG.AX << " " << sixDoFSemG.AY << " " << sixDoFSemG.AZ << "\n";
-	
-	ThreeDegreesOfFreedom f;
-	return f;
+
+	SixDegreesOfFreedom result2;
+	return result2;
 }
