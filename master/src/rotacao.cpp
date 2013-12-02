@@ -28,10 +28,19 @@ void multiplicar(float matriz[][3], float vet[3]){
 	vet[2] = result[2];
 }
 
+void arredondar(float vetor[3]){
+	for(int i = 0; i < 3; i++){
+		if(vetor[i] < 0.0001){
+			vetor[i] = 0;
+		}
+	}	
+}
+
 void rotacaoX(float vetor[3], float angulox){
 	float matrizRotacao[3][3];
 	rotacaoVetor(angulox, 1, 0, 0, matrizRotacao);
 	multiplicar(matrizRotacao, vetor);
+	arredondar(vetor);
 
 }
 
@@ -39,14 +48,14 @@ void rotacaoY(float vetor[3], float anguloy){
 	float matrizRotacao[3][3];
 	rotacaoVetor(anguloy, 0, 1, 0, matrizRotacao);
 	multiplicar(matrizRotacao, vetor);
-
+	arredondar(vetor);
 }
 
 void rotacaoZ(float vetor[3], float anguloz){
 	float matrizRotacao[3][3];
 	rotacaoVetor(anguloz, 0, 0, 1, matrizRotacao);
 	multiplicar(matrizRotacao, vetor);
-
+	arredondar(vetor);
 }
 
 	
