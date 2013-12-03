@@ -4,7 +4,7 @@
 all: raspipen
 
 raspipen: App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o
-	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o -lpthread -pedantic
+	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o  -lpthread -pedantic
 
 App.o: App.cpp
 	g++ -o App.o -c App.cpp -I Gyroscope/ -I DataProcessing/ -lpthread -pedantic
@@ -17,6 +17,7 @@ Gyroscope/I2Cdev.o: Gyroscope/I2Cdev.cpp
 
 Gyroscope/MPU6050.o: Gyroscope/MPU6050.cpp
 	g++ -o Gyroscope/MPU6050.o -c Gyroscope/MPU6050.cpp -lpthread -pedantic
+
 
 #########Data Processing#################
 DataProcessing/ProcessGyroscopeData.o:
