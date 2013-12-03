@@ -28,7 +28,7 @@ void callbackThreadFunction(SixDegreesOfFreedom d){
 //Por algum motivo insano, o código só funciona se imprimir as mensagems
 //usleep(1) não funciona.
     if(gravando){
-	std::cout << "Gravando\n";
+	//std::cout << "Gravando\n";
       pthread_mutex_lock(&mutex);
 
       dataHolder.push(d);
@@ -51,7 +51,15 @@ void *gyroscopeThread(void* arg){
 
 void HandleUserInput(){
 
+std::cout << "Raspipen, Ver 1.5\n";
   while(true){
+	if(!gravando){
+	
+	std::cout << "\nPara gravar, pressione 'r' seguido da tecla Enter: ";
+	}
+	else{
+	std::cout << "\nPara Parar a gravação, pressione 's' seguido da tecla Enter: ";
+	}
     char c;
     std::cin >> c;
 
@@ -64,7 +72,7 @@ void HandleUserInput(){
 		std::cout << "\nParando a gravação, inciando processamento da imagem, aguarde... ";
 		BMP bmp;
 		GenerateImage(&bmp,dataHolder);
-		std::cout << "Concluído\n";
+		std::cout << "Concluído\nImagem criada com o titulo \"teste.bmp\"";
 		dataHolder = std::queue<SixDegreesOfFreedom>();
 	}
 
@@ -86,7 +94,6 @@ int main() {
     exit(EXIT_FAILURE);
   }
   
-  std::cout <<  "Vai entrar no handleuserinput";
   HandleUserInput();
   
   pthread_exit(NULL);

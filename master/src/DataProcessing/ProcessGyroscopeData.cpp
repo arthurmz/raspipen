@@ -27,7 +27,6 @@ SixDegreesOfFreedom calculeVelocidadeReal(SixDegreesOfFreedom inp){
 	out.AX = realAcceleration(inp.AX, G_FORCE_RAW_X );
         out.AY = realAcceleration(inp.AY, G_FORCE_RAW_Y );
         out.AZ = realAcceleration(inp.AZ, G_FORCE_RAW_Z );
-	//cout << "Callback " << out.EX << " "  << out.EY << " " << out.EZ << " " << out.AX << " " << out.AY << " " << out.AZ;
 
 	return out;
 }
@@ -66,16 +65,23 @@ SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp){
 	gravity[3] = 0;
 	gravity[4] = 0;
 	gravity[5] = G_FORCE_RAW_Z;
-	cout << "gravity before: " << gravity[0] << " " << gravity[1] << " " << gravity[2] << " " << gravity[3] << " " << gravity[4] << " " << gravity[5] << "\n";
-	
-	//ApplyRotation(vector);
-	ApplyRotation(gravity);
 
-	cout << "gravity translated: " << gravity[0] << " " << gravity[1] << " " << gravity[2] << " " << gravity[3] << " " << gravity[4] << " " << gravity[5] << "\n";
+	ApplyRotation(gravity);
 
 	inp.AX -= gravity[3];
 	inp.AY -= gravity[4];
 	inp.AZ -= gravity[5];
+
+	return inp;
+}
+
+SixDegreesOfFreedom removeAceleracaoGravidade2(SixDegreesOfFreedom inp){
+	if (inp.AX < 300 && inp.AX > -300)
+		inp.AX = 0;
+	if (inp.AY < 300 && inp.AX > -300)
+		inp.AY = 0;
+	if (inp.AZ < 300 && inp.AX > -300)
+		inp.AZ = 0;
 
 	return inp;
 }
@@ -111,6 +117,9 @@ SixDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom sixDoF){
 	result4.Z = result3.AZ;
 	return result4;*/
 
-	SixDegreesOfFreedom result2;
-	return result2;
+	//SixDegreesOfFreedom rst1 = removeAceleracaoGravidade2(sixDoF);
+
+	SixDegreesOfFreedom rst2 = calculeVelocidadeReal ( sixDoF);
+
+	return rst2;
 }

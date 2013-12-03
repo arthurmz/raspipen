@@ -80,21 +80,21 @@ void (*dataHandler) (SixDegreesOfFreedom);
 
 bool setup() {
     // initialize device
-    printf("Initializing I2C devices...\n");
+    //printf("Initializing I2C devices...\n");
     mpu.initialize();
 
     // verify connection
-    printf("Testing device connections...\n");
-    printf(mpu.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
+    //printf("Testing device connections...\n");
+    //printf(mpu.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
 
     // load and configure the DMP
-    printf("Initializing DMP...\n");
+    //printf("Initializing DMP...\n");
     devStatus = mpu.dmpInitialize();
     
     // make sure it worked (returns 0 if so)
     if (devStatus == 0) {
         // turn on the DMP, now that it's ready
-        printf("Enabling DMP...\n");
+        //printf("Enabling DMP...\n");
         mpu.setDMPEnabled(true);
 
         // enable Arduino interrupt detection
@@ -103,7 +103,7 @@ bool setup() {
         mpuIntStatus = mpu.getIntStatus();
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
-        printf("DMP ready!\n");
+        //printf("DMP ready!\n");
         dmpReady = true;
 
         // get expected DMP packet size for later comparison
