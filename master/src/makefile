@@ -3,11 +3,12 @@
 
 all: raspipen
 
-raspipen: App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o EasyBMP/EasyBMP.o DataProcessing/ImageGenerator.o
-	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o EasyBMP/EasyBMP.o DataProcessing/ImageGenerator.o -lpthread -pedantic
+raspipen: App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o  DataProcessing/Physics/Rotation.o EasyBMP/EasyBMP.o DataProcessing/ImageGenerator.o DataProcessing/Filters/ConverteAceleracaoReal.o
+	g++ -o rppen App.o Gyroscope/Gyroscope.o Gyroscope/I2Cdev.o Gyroscope/MPU6050.o DataProcessing/ProcessGyroscopeData.o DataProcessing/Physics/Physics.o DataProcessing/Physics/Rotation.o EasyBMP/EasyBMP.o DataProcessing/ImageGenerator.o DataProcessing/Filters/ConverteAceleracaoReal.o -lpthread -pedantic
 
 App.o: App.cpp
-	g++ -o App.o -c App.cpp -I Gyroscope/ -I DataProcessing/ -I EasyBMP/ -lpthread -pedantic
+	g++ -o App.o -c App.cpp -I Gyroscope/ -I DataProcessing/ -I DataProcessing/Filters -I EasyBMP/ -I UserInput/ -lpthread -pedantic
+
 ##########Gyroscope######################
 Gyroscope/Gyroscope.o: Gyroscope/Gyroscope.cpp
 	g++ -o Gyroscope/Gyroscope.o -c Gyroscope/Gyroscope.cpp -lpthread -pedantic
@@ -31,6 +32,10 @@ DataProcessing/Physics/Rotation.o:
 
 DataProcessing/ImageGenerator.o:
 	g++ -o DataProcessing/ImageGenerator.o -c DataProcessing/ImageGenerator.cpp -I EasyBMP/ -I Gyroscope/
+
+DataProcessing/Filters/ConverteAceleracaoReal.o:
+	g++ -o DataProcessing/Filters/ConverteAceleracaoReal.o -c DataProcessing/Filters/ConverteAceleracaoReal.cpp -I Gyroscope/
+
 ########EasyBMP#########################
 EasyBMP/EasyBMP.o:
 	g++ -o EasyBMP/EasyBMP.o -c EasyBMP/EasyBMP.cpp
@@ -41,6 +46,8 @@ clean:
 	rm -rf Gyroscope/*.o
 	rm -rf DataProcessing/*.o
 	rm -rf DataProcessing/Physics/*.o
+	rm -rf DataProcessing/Filters/*.o
+
 mrproper: clean
 	rm -rf rppen
 	rm -rf test.bmp
