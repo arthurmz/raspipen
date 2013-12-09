@@ -40,7 +40,7 @@ DataProcessing/Filters/RemoveGravidade.o:
 	g++ -o DataProcessing/Filters/RemoveGravidade.o -c DataProcessing/Filters/RemoveGravidade.cpp -I Gyroscope/ -I DataProcessing/Physics/
 
 DataProcessing/Filters/AceleracaoParaDistancia.o:
-	g++ -o DataProcessing/Filters/AceleracaoParaDistancia.o -c DataProcessing/Filters/AceleracaoParaDistancia.cpp -I Gyroscope/DataProcessing/Physics/
+	g++ -o DataProcessing/Filters/AceleracaoParaDistancia.o -c DataProcessing/Filters/AceleracaoParaDistancia.cpp -I Gyroscope/ -I DataProcessing/Physics/
 ########EasyBMP#########################
 EasyBMP/EasyBMP.o:
 	g++ -o EasyBMP/EasyBMP.o -c EasyBMP/EasyBMP.cpp

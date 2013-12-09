@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <queue>
 #include <ConverteAceleracaoReal.h>
+#include <AceleracaoParaDistancia.h>
 #include <RemoveGravidade.h>
 #include <math.h>
 #include "Physics/Physics.h"
@@ -21,9 +22,11 @@ std::queue<SixDegreesOfFreedom> ProcessGyroscopeData(std::queue<SixDegreesOfFree
 
 	ConverteAceleracaoReal filtro1;
 	RemoveGravidade filtro2;
-
-	std::queue<SixDegreesOfFreedom> saida = filtro2.startFiltering (
-						filtro1.startFiltering(dataHolder));
+	AceleracaoParaDistancia filtro3;
+	
+	std::queue<SixDegreesOfFreedom> saida = filtro3.startFiltering(
+						filtro2.startFiltering (
+						filtro1.startFiltering(dataHolder)));
 	return saida;
 
 }
