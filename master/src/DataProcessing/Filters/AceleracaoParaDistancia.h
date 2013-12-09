@@ -2,9 +2,11 @@
 
 #include "Filter.h"
 #include "Pipe.h"
-#include <SixDegreesOfFreedom.h>
+#include <iostream>
+#include "../../Gyroscope/SixDegreesOfFreedom.h"
+#include <queue>
 
-class ConverteAceleracaoReal : public Filter{
+class AceleracaoParaDistancia : public Filter{
 public:
 	std::queue<SixDegreesOfFreedom> startFiltering(std::queue<SixDegreesOfFreedom>);
 };

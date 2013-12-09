@@ -1,6 +1,8 @@
+#pragma once
 #include <ThreeDegreesOfFreedom.h>
 #include <SixDegreesOfFreedom.h>
+#include <queue>
 
-SixDegreesOfFreedom ProcessGyroscopeData(SixDegreesOfFreedom d);
+std::queue<SixDegreesOfFreedom> ProcessGyroscopeData(std::queue<SixDegreesOfFreedom> d);
 
 SixDegreesOfFreedom removeAceleracaoGravidade(SixDegreesOfFreedom inp);

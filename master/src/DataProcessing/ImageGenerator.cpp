@@ -5,10 +5,23 @@
 
 using namespace std;
 
+
+
+
+
 void GenerateImage(BMP* bmpParam, std::queue<SixDegreesOfFreedom> dataHolder){
 
-	
+	std::queue<SixDegreesOfFreedom> saida = ProcessGyroscopeData(dataHolder);
 
+	std::cout << "hue " << saida.size() << "\n";
+	while (saida.size() > 0){
+		SixDegreesOfFreedom f = saida.front();
+		saida.pop();
+		std::cout << f.EX << " " << f.EY << " " << f.EZ << " "<< f.AX << " " << f.AY << " " << f.AZ << "\n";
+	}
+
+	
+	//configurando a imagem======================================================================
 	BMP bmp = *bmpParam;
 
 	bmp.SetSize(800, 600);
@@ -21,7 +34,9 @@ void GenerateImage(BMP* bmpParam, std::queue<SixDegreesOfFreedom> dataHolder){
 	int YAnterior = 0;
 	int ZAnterior = 0;
 
-	while(!dataHolder.empty()){
+
+	//============================================================================================
+	/*while(!dataHolder.empty()){
 		SixDegreesOfFreedom SixDoF0 = dataHolder.front();
 		dataHolder.pop();
 
@@ -51,7 +66,7 @@ void GenerateImage(BMP* bmpParam, std::queue<SixDegreesOfFreedom> dataHolder){
 
 
 		
-	bmp.WriteToFile("test.bmp");
+	bmp.WriteToFile("test.bmp");*/
 	
 }
 

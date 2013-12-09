@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Pipe.h"
-#include <SixDegreesOfFreedom.h>
+#include "../../Gyroscope/SixDegreesOfFreedom.h"
 
 class Filter{
 protected:
@@ -9,11 +9,11 @@ protected:
 	Pipe<SixDegreesOfFreedom> outputBuffer;
 
 public:
-	Filter(Pipe<SixDegreesOfFreedom> inpBuffer, Pipe<SixDegreesOfFreedom> outBuffer){
-
-	inputBuffer = inpBuffer;
-	outputBuffer = outBuffer;
-
+	bool running;
+	void setValues(Pipe<SixDegreesOfFreedom> inpBuffer, Pipe<SixDegreesOfFreedom> outBuffer){
+		running = true;
+		inputBuffer = inpBuffer;
+		outputBuffer = outBuffer;
 	}
-	virtual void startFiltering() = 0;//tells the compiler that this method must be overriden by a derived class, and might not have its own implementation.
+	virtual std::queue<SixDegreesOfFreedom> startFiltering(std::queue<SixDegreesOfFreedom>) = 0;//tells the compiler that this method must be overriden by a derived class, and might not have its own implementation.
 };

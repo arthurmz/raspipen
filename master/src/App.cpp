@@ -83,9 +83,11 @@ std::cout << "Raspipen, Ver 1.5\n";
 }
 
 
+
+
 int main() {
-  
-  /*gravando = false;
+
+  gravando = false;
 
   //Cria a thread do giroscópio
   pthread_t my_thread;
@@ -98,25 +100,7 @@ int main() {
   
   HandleUserInput();
   
-  pthread_exit(NULL);*/
-
-
-SixDegreesOfFreedom sgs;
-sgs.AX = 33;
-dataHolder.push(sgs);
-  Pipe<SixDegreesOfFreedom> inp(dataHolder);
-  Pipe<SixDegreesOfFreedom> out;
-
-  ConverteAceleracaoReal conversor(inp,out);
-
-  conversor.startFiltering();
-dataHolder = out.getBuffer();
-
-SixDegreesOfFreedom sixf = dataHolder.front();
-
-std::cout << sixf.AX << "\n";
-  
-  return 0;
+  pthread_exit(NULL);
 }
 
 

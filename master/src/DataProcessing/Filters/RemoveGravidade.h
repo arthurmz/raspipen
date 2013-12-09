@@ -2,9 +2,9 @@
 
 #include "Filter.h"
 #include "Pipe.h"
-#include <SixDegreesOfFreedom.h>
+#include <iostream>
 
-class ConverteAceleracaoReal : public Filter{
+class RemoveGravidade : public Filter{
 public:
 	std::queue<SixDegreesOfFreedom> startFiltering(std::queue<SixDegreesOfFreedom>);
 };

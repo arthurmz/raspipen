@@ -29,10 +29,15 @@ template <class T> class Pipe {
     T read();
     int size();
     std::queue<T> getBuffer();
+    void setBuffer(std::queue<T>);
 };
 
 template <class T> int Pipe<T>::size(){
 	return buffer.size();
+}
+
+template <class T> void Pipe<T>::setBuffer(std::queue<T> buff){
+	buffer = buff;
 }
 
 template <class T> std::queue<T> Pipe<T>::getBuffer(){
